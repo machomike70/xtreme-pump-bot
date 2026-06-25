@@ -1,0 +1,21 @@
+[Unit]
+Description=Xtreme Pump Bot — pump.fun live token feed and Telegram broadcaster
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=goml
+WorkingDirectory=/home/goml/xtreme-pump-bot
+EnvironmentFile=/home/goml/xtreme-pump-bot/scripts/infra/.env
+ExecStart=/usr/local/bin/node server/dist/index.js
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=xtreme-pump-bot
+KillMode=mixed
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target
