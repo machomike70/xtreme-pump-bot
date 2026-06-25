@@ -56,7 +56,7 @@ CREATE DATABASE pumpbot OWNER pumpbot;
 ## Step 4 — Fill in the .env file
 
 ```bash
-cp scripts/infra/.env scripts/infra/.env.bak
+cp scripts/infra/.env.example scripts/infra/.env
 nano scripts/infra/.env
 ```
 

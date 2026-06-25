@@ -1,5 +1,6 @@
 node_modules/
 dist/
-.env
 *.tsbuildinfo
 client/dist/
+# actual env with real credentials — copy from .env.example and fill in
+scripts/infra/.env
