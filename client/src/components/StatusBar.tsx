@@ -1,28 +1,26 @@
 interface Props {
   connected: boolean;
-  error: string | null;
+  totalSeen: number;
 }
 
-export function StatusBar({ connected, error }: Props) {
-  if (error) {
-    return (
-      <div className="flex items-center gap-2 text-red-400 text-sm">
-        <span className="w-2 h-2 rounded-full bg-red-400" />
-        {error}
-      </div>
-    );
-  }
-
+export function StatusBar({ connected, totalSeen }: Props) {
   return (
-    <div className="flex items-center gap-2 text-sm">
-      <span
-        className={`w-2 h-2 rounded-full ${
-          connected ? "bg-accent animate-pulse" : "bg-gray-600"
-        }`}
-      />
-      <span className={connected ? "text-accent" : "text-gray-500"}>
-        {connected ? "Live" : "Connecting…"}
-      </span>
+    <div className="flex items-center gap-3">
+      {totalSeen > 0 && (
+        <span className="text-gray-500 text-xs font-mono tabular-nums">
+          {totalSeen.toLocaleString()} seen
+        </span>
+      )}
+      <div className="flex items-center gap-1.5">
+        <span
+          className={`w-2 h-2 rounded-full flex-shrink-0 ${
+            connected ? "bg-accent animate-pulse" : "bg-gray-600"
+          }`}
+        />
+        <span className={`text-xs font-medium ${connected ? "text-accent" : "text-gray-500"}`}>
+          {connected ? "LIVE" : "connecting…"}
+        </span>
+      </div>
     </div>
   );
 }

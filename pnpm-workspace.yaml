@@ -1,3 +1,6 @@
 packages:
   - "server"
   - "client"
+
+overrides:
+  esbuild: ^0.28.1

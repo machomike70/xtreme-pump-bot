@@ -2,46 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-  background-color: #0d0d0d;
-  color: #e5e5e5;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #080c08;
+  color: #c8f0c8;
+  font-family: "Courier New", Courier, monospace;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── Scan line overlay ──────────────────────────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
 }
 
-.token-card-enter {
-  animation: slideIn 0.3s ease-out forwards;
+/* ── New token entrance ─────────────────────────────────────────────────────── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes flashBorderGreen {
+  0%   { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+  25%  { box-shadow: 0 0 0 2px rgba(57, 255, 20, 0.7); }
+  100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+}
+.token-enter {
+  animation:
+    slideDown 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    flashBorderGreen 0.9s ease-out 0.05s forwards;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+/* ── Gem glow ───────────────────────────────────────────────────────────────── */
+@keyframes gemGlow {
+  0%, 100% { box-shadow: 0 0 8px 1px rgba(57, 255, 20, 0.2); }
+  50%       { box-shadow: 0 0 20px 4px rgba(57, 255, 20, 0.5); }
 }
+.gem-glow { animation: gemGlow 2s ease-in-out infinite; }
 
-::-webkit-scrollbar-track {
-  background: #0d0d0d;
+/* ── Live dot pulse ─────────────────────────────────────────────────────────── */
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.85); }
 }
+.live-dot { animation: livePulse 1s ease-in-out infinite; }
 
-::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
-  border-radius: 3px;
-}
+/* ── Score bar colours ──────────────────────────────────────────────────────── */
+.score-bar-1 { background: linear-gradient(90deg,#333 0%,transparent 70%); }
+.score-bar-2 { background: linear-gradient(90deg,#555 0%,transparent 70%); }
+.score-bar-3 { background: linear-gradient(90deg,#f5a623 0%,transparent 70%); }
+.score-bar-4 { background: linear-gradient(90deg,#ff6b00 0%,transparent 70%); }
+.score-bar-5 { background: linear-gradient(90deg,#39FF14 0%,transparent 70%); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
+/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: #080c08; }
+::-webkit-scrollbar-thumb { background: #1a2a1a; border-radius: 2px; }
+
+/* ── No tap highlight ───────────────────────────────────────────────────────── */
+a, button { -webkit-tap-highlight-color: transparent; }
+
+/* ── Counter flip ───────────────────────────────────────────────────────────── */
+@keyframes countFlip {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.count-flip { animation: countFlip 0.25s ease-out forwards; }
+
+/* ── Pill logo ──────────────────────────────────────────────────────────────── */
+@keyframes flameFloat {
+  0%, 100% { transform: scaleY(1) translateY(0); }
+  50%       { transform: scaleY(1.08) translateY(-2px); }
+}
+.flame-anim { animation: flameFloat 1.8s ease-in-out infinite; }

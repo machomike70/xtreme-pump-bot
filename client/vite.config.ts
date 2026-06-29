@@ -3,14 +3,14 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    proxy: {
-      "/feed": "http://localhost:8080",
-      "/health": "http://localhost:8080",
-      "/bot": "http://localhost:8080",
-    },
-  },
+  base: "/",
   build: {
     outDir: "dist",
+    target: "esnext",
+  },
+  server: {
+    proxy: {
+      "/pump-alpha/feed": "http://localhost:8000",
+    },
   },
 });
